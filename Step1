@@ -1,0 +1,73 @@
+from midiutil.MidiFile import MIDIFile
+
+import random
+import simpleaudio as sa
+
+#genereert een random lijst van 16 stappen.
+myList = []
+for i in range (32):
+  myList.append(random.randrange(3))
+print(myList)
+
+#BPM keuze
+while True:
+    try:
+      bpmInput = input("  Kies een (%d): " % defaults["bpm"])
+      bpm = int(bpmInput or defaults["bpm"])
+      break
+    except:
+      print("Verkeerde input.")
+
+#Maatsoort keuze
+while True:
+    SignatureInput = input(" Maatsoort? (%s): " % defaults["timeSignature"])
+    timeSignature = time_signature(SignatureInput or defaults["timeSignature"])
+    if Signature:
+      break
+    else:
+      print("Verkeerde input. Probeer bijvoorbeeld 7/8")
+
+samples = [ sa.WaveObject.from_wave_file("/Users/CharleyMcNelly/Documents/Leerjaar2/Ciska/Kick.wav"),
+            sa.WaveObject.from_wave_file("/Users/CharleyMcNelly/Documents/Leerjaar2/Ciska/Snare.wav"),
+            sa.WaveObject.from_wave_file("/Users/CharleyMcNelly/Documents/Leerjaar2/Ciska/Hihat.wav")]
+
+events = [[index, sample] for index,sample in enumerate(myList)]
+print(events)
+
+
+
+
+'''
+# write it to disk
+with open("output.mid", 'wb') as outf:
+    mf.writeFile(outf)
+'''
+
+
+'''
+if userInput == 'q':
+    print("User typed q. Leaving program.")
+    sys.exit()
+if userInput == 'help':
+    print("Hello! And welcome to your new step sequencer. "
+
+'''
+
+#wanneer een voorwaarde is gevonden 
+#werkt hij de rest van de lijst niet meer af
+'''
+#----------------------------------------------------------#
+if (input >1 and < 16)
+  print ("start beat")
+elif (input == 0) or (input ==16)
+  print ("stop beat")
+elif (input < 0)
+  print ("error input must be more than 0")
+
+  if userInput == 'q':
+    print("User typed q. Leaving program.")
+    sys.exit()
+  if userInput == 'help':
+  	print("Hello! And welcome to your new step sequencer. ")
+#27.07 user input
+'''
