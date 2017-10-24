@@ -1,0 +1,145 @@
+#______________________________________________________________________________
+#NOTE: THIS SCRIPT CONTAINS DUPLICATE CODE = USEFULL EXAMPLE, SEE HANDS-ON TIPS
+#______________________________________________________________________________
+
+
+from midiutil import MIDIFile
+import random
+import time
+import simpleaudio as sa
+
+
+#3 samples inladen
+samples = [ sa.WaveObject.from_wave_file("/Users/CharleyMcNelly/Documents/Leerjaar2/Ciska/pythonExamples/audio/01_audioFiles/audioFiles/Pop.wav"),
+            sa.WaveObject.from_wave_file("/Users/CharleyMcNelly/Documents/Leerjaar2/Ciska/pythonExamples/audio/01_audioFiles/audioFiles/Dog2.wav"),
+            sa.WaveObject.from_wave_file("/Users/CharleyMcNelly/Documents/Leerjaar2/Ciska/pythonExamples/audio/01_audioFiles/audioFiles/Laser1.wav")]
+
+#BPM keuze
+while True:
+    try:
+      #bpm.isdigit() and int(bpm) >= 40 and int(bpm) <= 240:
+      bpmInput = input("  Kies een BPM: ")
+      bpm = int(bpmInput)
+      if bpm <=40 or bpm >=300:
+        raise ValueError
+      break
+    except ValueError:
+      print("Verkeerde input. Kies een BPM tussen de 40 en 300")
+
+#calculate the duration of a quarter note
+quarterNoteDuration = 60 / bpm
+#calculate the duration of a sixteenth note
+sixteenthNoteDuration = quarterNoteDuration / 4.0
+
+
+
+#Beats maken.
+myList = []
+for i in range (32):
+  myList.append(random.randrange(3))
+print(myList)
+events = [[index, sample] for index,sample in enumerate(myList)]
+print(events)
+
+
+#lijst afwerken
+PlayEvents = events[:]
+PlayEvents = [[event[0]*sixteenthNoteDuration, event[1]] for event in PlayEvents]
+#retrieve first event
+#NOTE: pop(0) returns and removes the element at index 0
+event = PlayEvents.pop(0)
+#retrieve the startime: current time
+startTime = time.time()
+keepPlaying = True
+#play the sequence
+while keepPlaying:
+  #retrieve current time
+  currentTime = time.time()
+  #check if the event's time (which is at index 0 of event) is passed
+  if currentTime - startTime >= event[0]:
+    #play sample -> sample index is at index 1
+    samples[event[1]].play()
+    #if there are events left in the events list
+    if PlayEvents:
+      #retrieve the next event
+      event = PlayEvents.pop(0)
+    else:
+      #list is empty, stop loop
+      keepPlaying = False
+
+Pitches = [36, 38, 42]
+
+Save = input("Wilt u de sequence opslaan? Kies 1 voor ja, kies 0 voor nee: ")
+if Save == "1":
+
+
+  midi = MIDIFile(1,adjust_origin=True)
+    
+  # Tempo v/d track
+  midi.addTempo(0,0,bpm)
+    
+  # Event naar MidiNoot
+  for event in events:
+    # Bereken duratie van 1 MidiNote
+    channel = 9 # Because 0-15
+    pitch = Pitches[event[1]]
+    time = event[0] / 4
+    duration = 1
+    velocity = 90
+        # Add the note
+    midi.addNote(0,channel,pitch,time,duration,velocity)
+    
+    # Export the file
+  try:
+    # Open the file
+    fileName = input ("Kies een naam voor de file: ")
+    if fileName[-4:] != ".mid":
+      fileName += ".mid"
+    with open(fileName,"wb") as output:
+      # Write the MIDI to the file
+      midi.writeFile(output)
+
+    #errorcheck
+  except IOError:
+    print ("error please try again")
+
+
+'''
+if userInput == 'q':
+    print("User typed q. Leaving program.")
+    sys.exit()
+if userInput == 'help':
+    print("Hello! And welcome to your new step sequencer. "
+
+'''
+
+#wanneer een voorwaarde is gevonden 
+#werkt hij de rest van de lijst niet meer af
+'''
+#----------------------------------------------------------#
+
+
+#Maatsoort keuze
+while True:
+    SignatureInput = input(" Maatsoort? (%s): " % defaults["timeSignature"])
+    timeSignature = time_signature(SignatureInput or defaults["timeSignature"])
+    if Signature:
+      break
+    else:
+      print("Verkeerde input. Probeer bijvoorbeeld 7/8")
+
+if (input >1 and < 16)
+  print ("start beat")
+elif (input == 0) or (input ==16)
+  print ("stop beat")
+elif (input < 0)
+  print ("error input must be more than 0")
+
+  if userInput == 'q':
+    print("User typed q. Leaving program.")
+    sys.exit()
+  if userInput == 'help':
+  	print("Hello! And welcome to your new step sequencer. ")
+#27.07 user input
+
+'''
